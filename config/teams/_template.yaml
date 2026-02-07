@@ -1,0 +1,60 @@
+# Team Configuration Template
+# Copy this file and customize for your team
+
+team:
+  id: my-team                    # Unique identifier (lowercase, no spaces)
+  name: "My Team"                # Display name
+  description: "Team description"
+  status: active                 # active | paused | archived
+
+# Project settings
+project:
+  repo: "owner/repo"             # GitHub repository
+  branch: main                   # Default branch
+  workspace: ""                  # Local path (optional, for local dev)
+
+# Discord settings
+discord:
+  category: "My Team"            # Discord category name
+  channels:
+    - "#my-team-general"
+    - "#my-team-dev"
+
+# Team roster
+roster:
+  # Project Manager (required)
+  pm:
+    agent: ada                   # Agent ID from agents/pool/
+    model: gemini-pro            # Override default model (optional)
+    active: true
+    
+  # Team members
+  members:
+    - agent: linus               # Agent ID
+      role: dev-lead             # Role from roles.yaml
+      model: deepseek            # Override model (optional)
+      active: true
+      
+    - agent: dieter
+      role: designer
+      # model: defaults to role's default_model
+      active: true
+      
+    - agent: grace
+      role: qa
+      active: true
+
+# Team-specific workflows (optional)
+workflows:
+  default:
+    - pm receives task
+    - pm assigns to appropriate member
+    - member implements
+    - member creates PR
+    - qa reviews
+    - pm approves and merges
+
+# Resource limits (optional, overrides framework defaults)
+limits:
+  max_concurrent_tasks: 5
+  max_api_cost_per_day: 20

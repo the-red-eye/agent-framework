@@ -1,0 +1,80 @@
+# Team Adamastor Configuration
+# Political data visualization project
+
+team:
+  id: adamastor
+  name: "Team Adamastor"
+  description: "Desenvolvimento do projecto Adamastor - Visualização de dados políticos portugueses"
+  status: active
+
+project:
+  repo: "bcamarneiro/adamastor"
+  branch: main
+  workspace: "~/Projects/bcamarneiro/adamastor"
+
+discord:
+  category: "Adamastor"
+  channels:
+    - "#adamastor-general"
+    - "#adamastor-dev"
+    - "#adamastor-design"
+    - "#adamastor-qa"
+
+roster:
+  pm:
+    agent: ada
+    model: gemini-pro
+    active: true
+    
+  members:
+    - agent: linus
+      role: dev-lead
+      model: deepseek
+      active: true
+      focus: "Backend, API, architecture"
+      
+    - agent: dieter
+      role: designer
+      model: sonnet
+      active: true
+      focus: "UI/UX, design system, visual consistency"
+      
+    - agent: turing
+      role: dev-junior
+      model: deepseek
+      active: true
+      focus: "Frontend implementation, components"
+      
+    - agent: grace
+      role: qa
+      model: gemini-flash
+      active: true
+      focus: "Testing, accessibility, cross-browser"
+      
+    - agent: margaret
+      role: dev-junior
+      model: deepseek
+      active: false  # On standby
+      focus: "Documentation, data processing"
+
+workflows:
+  feature:
+    - PM creates GitHub issue with specs
+    - PM assigns to dev based on focus area
+    - Dev creates branch and implements
+    - Dev creates PR with description
+    - Designer reviews UI (if applicable)
+    - QA tests functionality
+    - Lead reviews code
+    - PM approves and merges
+    
+  bug:
+    - QA or user reports bug
+    - PM triages and assigns
+    - Dev fixes and creates PR
+    - QA verifies fix
+    - PM merges
+
+limits:
+  max_concurrent_tasks: 6
+  max_api_cost_per_day: 25

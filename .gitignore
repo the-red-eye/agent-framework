@@ -1,0 +1,28 @@
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Runtime state (generated)
+teams/*/state.json
+teams/*/logs/
+
+# Agent memory (personal)
+agents/pool/*/memory/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Node (if using any tooling)
+node_modules/

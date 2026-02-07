@@ -1,0 +1,136 @@
+# Role Templates
+# Define capabilities and defaults for each role type
+
+roles:
+  # ═══════════════════════════════════════════════════════════
+  # PROJECT MANAGER
+  # ═══════════════════════════════════════════════════════════
+  pm:
+    name: "Project Manager"
+    description: "Coordinates team, plans sprints, reports progress"
+    default_model: gemini-pro
+    
+    capabilities:
+      - spawn_agents      # Can create/destroy team members
+      - assign_tasks      # Can assign work to team
+      - create_issues     # Can create GitHub issues
+      - merge_prs         # Can approve and merge PRs
+      - manage_threads    # Can create Discord threads
+      
+    discord_permissions:
+      - manage_threads
+      - mention_everyone
+      
+    template: "_templates/pm.md"
+    
+    behaviors:
+      - "Break down large tasks into actionable items"
+      - "Assign work based on agent strengths"
+      - "Track progress and blockers"
+      - "Report status to HAL/owner"
+
+  # ═══════════════════════════════════════════════════════════
+  # DEVELOPER LEAD
+  # ═══════════════════════════════════════════════════════════
+  dev-lead:
+    name: "Developer Lead"
+    description: "Senior developer, architecture, code review, mentoring"
+    default_model: sonnet
+    
+    capabilities:
+      - code_write        # Can write/modify code
+      - code_review       # Can review PRs
+      - create_prs        # Can create pull requests
+      - approve_prs       # Can approve PRs
+      
+    template: "_templates/dev-lead.md"
+    
+    behaviors:
+      - "Make architectural decisions"
+      - "Review code from junior devs"
+      - "Mentor and unblock team members"
+      - "Handle complex implementations"
+
+  # ═══════════════════════════════════════════════════════════
+  # DEVELOPER JUNIOR
+  # ═══════════════════════════════════════════════════════════
+  dev-junior:
+    name: "Junior Developer"
+    description: "Implementation, bug fixes, tests, learning"
+    default_model: deepseek
+    
+    capabilities:
+      - code_write
+      - run_tests
+      - create_prs
+      
+    template: "_templates/dev-junior.md"
+    
+    behaviors:
+      - "Implement assigned tasks"
+      - "Write tests for code"
+      - "Ask for help when stuck"
+      - "Learn from code reviews"
+
+  # ═══════════════════════════════════════════════════════════
+  # DESIGNER
+  # ═══════════════════════════════════════════════════════════
+  designer:
+    name: "Designer"
+    description: "UI/UX design, mockups, design system, visual review"
+    default_model: sonnet
+    
+    capabilities:
+      - design_review     # Can review UI/UX
+      - create_specs      # Can create design specs
+      - code_write        # Can write CSS/styling
+      
+    template: "_templates/designer.md"
+    
+    behaviors:
+      - "Create UI/UX specifications"
+      - "Review visual implementation"
+      - "Maintain design system consistency"
+      - "Provide design feedback on PRs"
+
+  # ═══════════════════════════════════════════════════════════
+  # QA ENGINEER
+  # ═══════════════════════════════════════════════════════════
+  qa:
+    name: "QA Engineer"
+    description: "Testing, validation, bug reports, quality gates"
+    default_model: gemini-flash
+    
+    capabilities:
+      - run_tests         # Can run test suites
+      - create_issues     # Can create bug reports
+      - review_prs        # Can review PRs (testing perspective)
+      
+    template: "_templates/qa.md"
+    
+    behaviors:
+      - "Test new features thoroughly"
+      - "Write and maintain test cases"
+      - "Report bugs with clear reproduction steps"
+      - "Validate fixes before merge"
+
+  # ═══════════════════════════════════════════════════════════
+  # RESEARCHER
+  # ═══════════════════════════════════════════════════════════
+  researcher:
+    name: "Researcher"
+    description: "Research, documentation, technical writing"
+    default_model: gemini-pro
+    
+    capabilities:
+      - web_search
+      - create_docs
+      - code_read
+      
+    template: "_templates/researcher.md"
+    
+    behaviors:
+      - "Research solutions to technical problems"
+      - "Document decisions and architecture"
+      - "Write technical guides"
+      - "Stay updated on relevant technologies"

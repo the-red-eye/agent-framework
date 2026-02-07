@@ -1,0 +1,42 @@
+# Framework Configuration
+# Global settings for the agent framework
+
+framework:
+  name: "Agent Framework"
+  version: "0.1.0"
+
+# Orchestrator (main agent that manages teams)
+orchestrator:
+  agent: hal
+  location: local  # local | docker | remote
+
+# Communication settings
+communication:
+  primary: discord
+  discord:
+    server_id: ""  # Your Discord server ID
+    control_channel: "#hal-control"
+
+# Default settings for agents
+defaults:
+  model: deepseek
+  timeout_minutes: 30
+  max_retries: 3
+
+# Resource limits
+limits:
+  max_teams: 10
+  max_agents_per_team: 10
+  max_api_cost_per_day: 50  # USD
+
+# Monitoring
+monitoring:
+  health_check_interval: 60  # seconds
+  alert_on_failure: true
+
+# Paths (relative to framework root)
+paths:
+  agents: ./agents
+  teams: ./teams
+  scripts: ./scripts
+  logs: ./logs
