@@ -1,0 +1,7 @@
+{
+  "agents": {
+    "defaults": { "model": { "primary": "anthropic/claude-sonnet-4-5" }, "workspace": "/workspace" },
+    "list": [{ "id": "main", "identity": { "name": "Alan Turing", "emoji": "💡" }}]
+  },
+  "channels": { "discord": { "enabled": true, "token": "${DISCORD_TURING_TOKEN}" }}
+}

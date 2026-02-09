@@ -1,0 +1,7 @@
+{
+  "agents": {
+    "defaults": { "model": { "primary": "google/gemini-2.0-flash" }, "workspace": "/workspace" },
+    "list": [{ "id": "main", "identity": { "name": "Margaret Hamilton", "emoji": "🚀" }}]
+  },
+  "channels": { "discord": { "enabled": true, "token": "${DISCORD_MARGARET_TOKEN}" }}
+}

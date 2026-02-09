@@ -1,0 +1,118 @@
+# HAL-9000-CREW - Autonomous Agents
+# HAL stays on Mac, crew runs in Docker
+# Start with 3 agents, uncomment others when M4 arrives
+
+services:
+  # ═══════════════════════════════════════════════════════════
+  # ACTIVE AGENTS (Core Team)
+  # ═══════════════════════════════════════════════════════════
+
+  ada:
+    build: .
+    container_name: crew-ada
+    mem_limit: 512m
+    env_file: .env
+    environment:
+      - TZ=Europe/Lisbon
+      - AGENT_NAME=Ada
+      - OPENCLAW_CONFIG=/workspace/openclaw.json
+    volumes:
+      - ./agents/ada:/workspace
+      - ./shared:/shared:ro
+    command: ["openclaw", "gateway", "start"]
+    restart: unless-stopped
+    networks:
+      - crew-network
+
+  linus:
+    build: .
+    container_name: crew-linus
+    mem_limit: 512m
+    env_file: .env
+    environment:
+      - TZ=Europe/Lisbon
+      - AGENT_NAME=Linus
+      - OPENCLAW_CONFIG=/workspace/openclaw.json
+    volumes:
+      - ./agents/linus:/workspace
+      - ./shared:/shared:ro
+    command: ["openclaw", "gateway", "start"]
+    restart: unless-stopped
+    networks:
+      - crew-network
+
+  grace:
+    build: .
+    container_name: crew-grace
+    mem_limit: 512m
+    env_file: .env
+    environment:
+      - TZ=Europe/Lisbon
+      - AGENT_NAME=Grace
+      - OPENCLAW_CONFIG=/workspace/openclaw.json
+    volumes:
+      - ./agents/grace:/workspace
+      - ./shared:/shared:ro
+    command: ["openclaw", "gateway", "start"]
+    restart: unless-stopped
+    networks:
+      - crew-network
+
+  # ═══════════════════════════════════════════════════════════
+  # DISABLED AGENTS (Uncomment when M4 arrives)
+  # ═══════════════════════════════════════════════════════════
+
+  # dieter:
+  #   build: .
+  #   container_name: crew-dieter
+  #   mem_limit: 512m
+  #   env_file: .env
+  #   environment:
+  #     - TZ=Europe/Lisbon
+  #     - AGENT_NAME=Dieter
+  #     - OPENCLAW_CONFIG=/workspace/openclaw.json
+  #   volumes:
+  #     - ./agents/dieter:/workspace
+  #     - ./shared:/shared:ro
+  #   command: ["openclaw", "gateway", "start"]
+  #   restart: unless-stopped
+  #   networks:
+  #     - crew-network
+
+  # turing:
+  #   build: .
+  #   container_name: crew-turing
+  #   mem_limit: 512m
+  #   env_file: .env
+  #   environment:
+  #     - TZ=Europe/Lisbon
+  #     - AGENT_NAME=Turing
+  #     - OPENCLAW_CONFIG=/workspace/openclaw.json
+  #   volumes:
+  #     - ./agents/turing:/workspace
+  #     - ./shared:/shared:ro
+  #   command: ["openclaw", "gateway", "start"]
+  #   restart: unless-stopped
+  #   networks:
+  #     - crew-network
+
+  # margaret:
+  #   build: .
+  #   container_name: crew-margaret
+  #   mem_limit: 512m
+  #   env_file: .env
+  #   environment:
+  #     - TZ=Europe/Lisbon
+  #     - AGENT_NAME=Margaret
+  #     - OPENCLAW_CONFIG=/workspace/openclaw.json
+  #   volumes:
+  #     - ./agents/margaret:/workspace
+  #     - ./shared:/shared:ro
+  #   command: ["openclaw", "gateway", "start"]
+  #   restart: unless-stopped
+  #   networks:
+  #     - crew-network
+
+networks:
+  crew-network:
+    driver: bridge
