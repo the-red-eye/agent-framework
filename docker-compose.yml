@@ -6,6 +6,8 @@
 #   - no mem_limit (OOM with 1g)
 
 services:
+  # --- CORE TEAM (PERSISTENT) ---
+
   ada:
     build: .
     container_name: crew-ada
@@ -13,7 +15,7 @@ services:
     environment:
       - TZ=Europe/Lisbon
       - AGENT_NAME=Ada
-      - MODEL=anthropic/claude-3-opus
+      - MODEL=anthropic/claude-3-5-sonnet
     volumes:
       - ./agents/ada:/workspace
       - ./agents/ada/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
@@ -44,157 +46,160 @@ services:
     networks:
       - crew-network
 
-  grace:
-    build: .
-    container_name: crew-grace
-    env_file: .env
-    environment:
-      - TZ=Europe/Lisbon
-      - AGENT_NAME=Grace
-      - MODEL=anthropic/claude-3-5-sonnet
-    volumes:
-      - ./agents/grace:/workspace
-      - ./agents/grace/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
-      - ./entrypoint.sh:/entrypoint.sh:ro
-      - ./shared:/shared:ro
-    entrypoint: ["/bin/sh", "/entrypoint.sh"]
-    command: []
-    restart: unless-stopped
-    networks:
-      - crew-network
+  # --- DECOMMISSIONED (MERGED INTO CORE) ---
+  # These roles are now handled by Ada (Biz/Mgmt) and Linus (Eng) via sub-agents.
 
-  dieter:
-    build: .
-    container_name: crew-dieter
-    env_file: .env
-    environment:
-      - TZ=Europe/Lisbon
-      - AGENT_NAME=Dieter
-      - MODEL=anthropic/claude-3-5-sonnet
-    volumes:
-      - ./agents/dieter:/workspace
-      - ./agents/dieter/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
-      - ./entrypoint.sh:/entrypoint.sh:ro
-      - ./shared:/shared:ro
-    entrypoint: ["/bin/sh", "/entrypoint.sh"]
-    command: []
-    restart: unless-stopped
-    networks:
-      - crew-network
+  # grace:
+  #   build: .
+  #   container_name: crew-grace
+  #   env_file: .env
+  #   environment:
+  #     - TZ=Europe/Lisbon
+  #     - AGENT_NAME=Grace
+  #     - MODEL=anthropic/claude-3-5-sonnet
+  #   volumes:
+  #     - ./agents/grace:/workspace
+  #     - ./agents/grace/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+  #     - ./entrypoint.sh:/entrypoint.sh:ro
+  #     - ./shared:/shared:ro
+  #   entrypoint: ["/bin/sh", "/entrypoint.sh"]
+  #   command: []
+  #   restart: unless-stopped
+  #   networks:
+  #     - crew-network
 
-  turing:
-    build: .
-    container_name: crew-turing
-    env_file: .env
-    environment:
-      - TZ=Europe/Lisbon
-      - AGENT_NAME=Turing
-      - MODEL=anthropic/claude-3-5-sonnet
-    volumes:
-      - ./agents/turing:/workspace
-      - ./agents/turing/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
-      - ./entrypoint.sh:/entrypoint.sh:ro
-      - ./shared:/shared:ro
-    entrypoint: ["/bin/sh", "/entrypoint.sh"]
-    command: []
-    restart: unless-stopped
-    networks:
-      - crew-network
+  # dieter:
+  #   build: .
+  #   container_name: crew-dieter
+  #   env_file: .env
+  #   environment:
+  #     - TZ=Europe/Lisbon
+  #     - AGENT_NAME=Dieter
+  #     - MODEL=anthropic/claude-3-5-sonnet
+  #   volumes:
+  #     - ./agents/dieter:/workspace
+  #     - ./agents/dieter/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+  #     - ./entrypoint.sh:/entrypoint.sh:ro
+  #     - ./shared:/shared:ro
+  #   entrypoint: ["/bin/sh", "/entrypoint.sh"]
+  #   command: []
+  #   restart: unless-stopped
+  #   networks:
+  #     - crew-network
 
-  margaret:
-    build: .
-    container_name: crew-margaret
-    env_file: .env
-    environment:
-      - TZ=Europe/Lisbon
-      - AGENT_NAME=Margaret
-      - MODEL=anthropic/claude-3-5-sonnet
-    volumes:
-      - ./agents/margaret:/workspace
-      - ./agents/margaret/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
-      - ./entrypoint.sh:/entrypoint.sh:ro
-      - ./shared:/shared:ro
-    entrypoint: ["/bin/sh", "/entrypoint.sh"]
-    command: []
-    restart: unless-stopped
-    networks:
-      - crew-network
+  # turing:
+  #   build: .
+  #   container_name: crew-turing
+  #   env_file: .env
+  #   environment:
+  #     - TZ=Europe/Lisbon
+  #     - AGENT_NAME=Turing
+  #     - MODEL=anthropic/claude-3-5-sonnet
+  #   volumes:
+  #     - ./agents/turing:/workspace
+  #     - ./agents/turing/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+  #     - ./entrypoint.sh:/entrypoint.sh:ro
+  #     - ./shared:/shared:ro
+  #   entrypoint: ["/bin/sh", "/entrypoint.sh"]
+  #   command: []
+  #   restart: unless-stopped
+  #   networks:
+  #     - crew-network
 
-  drucker:
-    build: .
-    container_name: crew-drucker
-    env_file: .env
-    environment:
-      - TZ=Europe/Lisbon
-      - AGENT_NAME=Drucker
-      - MODEL=anthropic/claude-3-5-sonnet
-    volumes:
-      - ./agents/drucker:/workspace
-      - ./agents/drucker/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
-      - ./entrypoint.sh:/entrypoint.sh:ro
-      - ./shared:/shared:ro
-    entrypoint: ["/bin/sh", "/entrypoint.sh"]
-    command: []
-    restart: unless-stopped
-    networks:
-      - crew-network
+  # margaret:
+  #   build: .
+  #   container_name: crew-margaret
+  #   env_file: .env
+  #   environment:
+  #     - TZ=Europe/Lisbon
+  #     - AGENT_NAME=Margaret
+  #     - MODEL=anthropic/claude-3-5-sonnet
+  #   volumes:
+  #     - ./agents/margaret:/workspace
+  #     - ./agents/margaret/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+  #     - ./entrypoint.sh:/entrypoint.sh:ro
+  #     - ./shared:/shared:ro
+  #   entrypoint: ["/bin/sh", "/entrypoint.sh"]
+  #   command: []
+  #   restart: unless-stopped
+  #   networks:
+  #     - crew-network
 
-  schumpeter:
-    build: .
-    container_name: crew-schumpeter
-    env_file: .env
-    environment:
-      - TZ=Europe/Lisbon
-      - AGENT_NAME=Schumpeter
-      - MODEL=anthropic/claude-3-5-sonnet
-    volumes:
-      - ./agents/schumpeter:/workspace
-      - ./agents/schumpeter/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
-      - ./entrypoint.sh:/entrypoint.sh:ro
-      - ./shared:/shared:ro
-    entrypoint: ["/bin/sh", "/entrypoint.sh"]
-    command: []
-    restart: unless-stopped
-    networks:
-      - crew-network
+  # drucker:
+  #   build: .
+  #   container_name: crew-drucker
+  #   env_file: .env
+  #   environment:
+  #     - TZ=Europe/Lisbon
+  #     - AGENT_NAME=Drucker
+  #     - MODEL=anthropic/claude-3-5-sonnet
+  #   volumes:
+  #     - ./agents/drucker:/workspace
+  #     - ./agents/drucker/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+  #     - ./entrypoint.sh:/entrypoint.sh:ro
+  #     - ./shared:/shared:ro
+  #   entrypoint: ["/bin/sh", "/entrypoint.sh"]
+  #   command: []
+  #   restart: unless-stopped
+  #   networks:
+  #     - crew-network
 
-  marconi:
-    build: .
-    container_name: crew-marconi
-    env_file: .env
-    environment:
-      - TZ=Europe/Lisbon
-      - AGENT_NAME=Marconi
-      - MODEL=anthropic/claude-3-5-sonnet
-    volumes:
-      - ./agents/marconi:/workspace
-      - ./agents/marconi/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
-      - ./entrypoint.sh:/entrypoint.sh:ro
-      - ./shared:/shared:ro
-    entrypoint: ["/bin/sh", "/entrypoint.sh"]
-    command: []
-    restart: unless-stopped
-    networks:
-      - crew-network
+  # schumpeter:
+  #   build: .
+  #   container_name: crew-schumpeter
+  #   env_file: .env
+  #   environment:
+  #     - TZ=Europe/Lisbon
+  #     - AGENT_NAME=Schumpeter
+  #     - MODEL=anthropic/claude-3-5-sonnet
+  #   volumes:
+  #     - ./agents/schumpeter:/workspace
+  #     - ./agents/schumpeter/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+  #     - ./entrypoint.sh:/entrypoint.sh:ro
+  #     - ./shared:/shared:ro
+  #   entrypoint: ["/bin/sh", "/entrypoint.sh"]
+  #   command: []
+  #   restart: unless-stopped
+  #   networks:
+  #     - crew-network
 
-  thompson:
-    build: .
-    container_name: crew-thompson
-    env_file: .env
-    environment:
-      - TZ=Europe/Lisbon
-      - AGENT_NAME=Thompson
-      - MODEL=anthropic/claude-3-5-sonnet
-    volumes:
-      - ./agents/thompson:/workspace
-      - ./agents/thompson/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
-      - ./entrypoint.sh:/entrypoint.sh:ro
-      - ./shared:/shared:ro
-    entrypoint: ["/bin/sh", "/entrypoint.sh"]
-    command: []
-    restart: unless-stopped
-    networks:
-      - crew-network
+  # marconi:
+  #   build: .
+  #   container_name: crew-marconi
+  #   env_file: .env
+  #   environment:
+  #     - TZ=Europe/Lisbon
+  #     - AGENT_NAME=Marconi
+  #     - MODEL=anthropic/claude-3-5-sonnet
+  #   volumes:
+  #     - ./agents/marconi:/workspace
+  #     - ./agents/marconi/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+  #     - ./entrypoint.sh:/entrypoint.sh:ro
+  #     - ./shared:/shared:ro
+  #   entrypoint: ["/bin/sh", "/entrypoint.sh"]
+  #   command: []
+  #   restart: unless-stopped
+  #   networks:
+  #     - crew-network
+
+  # thompson:
+  #   build: .
+  #   container_name: crew-thompson
+  #   env_file: .env
+  #   environment:
+  #     - TZ=Europe/Lisbon
+  #     - AGENT_NAME=Thompson
+  #     - MODEL=anthropic/claude-3-5-sonnet
+  #   volumes:
+  #     - ./agents/thompson:/workspace
+  #     - ./agents/thompson/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+  #     - ./entrypoint.sh:/entrypoint.sh:ro
+  #     - ./shared:/shared:ro
+  #   entrypoint: ["/bin/sh", "/entrypoint.sh"]
+  #   command: []
+  #   restart: unless-stopped
+  #   networks:
+  #     - crew-network
 
 networks:
   crew-network:
