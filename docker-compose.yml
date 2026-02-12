@@ -1,25 +1,26 @@
 # HAL-9000-CREW - Autonomous Agents
 # HAL stays on Mac, crew runs in Docker
-# Start with 3 agents, uncomment others when M4 arrives
+# All agents use the same pattern:
+#   - config template mounted, envsubst resolves tokens at boot
+#   - entrypoint.sh generates openclaw.json from .tpl + env vars
+#   - no mem_limit (OOM with 1g)
 
 services:
-  # ═══════════════════════════════════════════════════════════
-  # ACTIVE AGENTS (Core Team)
-  # ═══════════════════════════════════════════════════════════
-
   ada:
     build: .
     container_name: crew-ada
-    mem_limit: 512m
     env_file: .env
     environment:
       - TZ=Europe/Lisbon
       - AGENT_NAME=Ada
-      - OPENCLAW_CONFIG=/workspace/openclaw.json
+      - MODEL=anthropic/claude-3-opus
     volumes:
       - ./agents/ada:/workspace
+      - ./agents/ada/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+      - ./entrypoint.sh:/entrypoint.sh:ro
       - ./shared:/shared:ro
-    command: ["openclaw", "gateway", "start"]
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    command: []
     restart: unless-stopped
     networks:
       - crew-network
@@ -27,16 +28,18 @@ services:
   linus:
     build: .
     container_name: crew-linus
-    mem_limit: 512m
     env_file: .env
     environment:
       - TZ=Europe/Lisbon
       - AGENT_NAME=Linus
-      - OPENCLAW_CONFIG=/workspace/openclaw.json
+      - MODEL=anthropic/claude-3-5-sonnet
     volumes:
       - ./agents/linus:/workspace
+      - ./agents/linus/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+      - ./entrypoint.sh:/entrypoint.sh:ro
       - ./shared:/shared:ro
-    command: ["openclaw", "gateway", "start"]
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    command: []
     restart: unless-stopped
     networks:
       - crew-network
@@ -44,74 +47,154 @@ services:
   grace:
     build: .
     container_name: crew-grace
-    mem_limit: 512m
     env_file: .env
     environment:
       - TZ=Europe/Lisbon
       - AGENT_NAME=Grace
-      - OPENCLAW_CONFIG=/workspace/openclaw.json
+      - MODEL=anthropic/claude-3-5-sonnet
     volumes:
       - ./agents/grace:/workspace
+      - ./agents/grace/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+      - ./entrypoint.sh:/entrypoint.sh:ro
       - ./shared:/shared:ro
-    command: ["openclaw", "gateway", "start"]
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    command: []
     restart: unless-stopped
     networks:
       - crew-network
 
-  # ═══════════════════════════════════════════════════════════
-  # DISABLED AGENTS (Uncomment when M4 arrives)
-  # ═══════════════════════════════════════════════════════════
+  dieter:
+    build: .
+    container_name: crew-dieter
+    env_file: .env
+    environment:
+      - TZ=Europe/Lisbon
+      - AGENT_NAME=Dieter
+      - MODEL=anthropic/claude-3-5-sonnet
+    volumes:
+      - ./agents/dieter:/workspace
+      - ./agents/dieter/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+      - ./entrypoint.sh:/entrypoint.sh:ro
+      - ./shared:/shared:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    command: []
+    restart: unless-stopped
+    networks:
+      - crew-network
 
-  # dieter:
-  #   build: .
-  #   container_name: crew-dieter
-  #   mem_limit: 512m
-  #   env_file: .env
-  #   environment:
-  #     - TZ=Europe/Lisbon
-  #     - AGENT_NAME=Dieter
-  #     - OPENCLAW_CONFIG=/workspace/openclaw.json
-  #   volumes:
-  #     - ./agents/dieter:/workspace
-  #     - ./shared:/shared:ro
-  #   command: ["openclaw", "gateway", "start"]
-  #   restart: unless-stopped
-  #   networks:
-  #     - crew-network
+  turing:
+    build: .
+    container_name: crew-turing
+    env_file: .env
+    environment:
+      - TZ=Europe/Lisbon
+      - AGENT_NAME=Turing
+      - MODEL=anthropic/claude-3-5-sonnet
+    volumes:
+      - ./agents/turing:/workspace
+      - ./agents/turing/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+      - ./entrypoint.sh:/entrypoint.sh:ro
+      - ./shared:/shared:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    command: []
+    restart: unless-stopped
+    networks:
+      - crew-network
 
-  # turing:
-  #   build: .
-  #   container_name: crew-turing
-  #   mem_limit: 512m
-  #   env_file: .env
-  #   environment:
-  #     - TZ=Europe/Lisbon
-  #     - AGENT_NAME=Turing
-  #     - OPENCLAW_CONFIG=/workspace/openclaw.json
-  #   volumes:
-  #     - ./agents/turing:/workspace
-  #     - ./shared:/shared:ro
-  #   command: ["openclaw", "gateway", "start"]
-  #   restart: unless-stopped
-  #   networks:
-  #     - crew-network
+  margaret:
+    build: .
+    container_name: crew-margaret
+    env_file: .env
+    environment:
+      - TZ=Europe/Lisbon
+      - AGENT_NAME=Margaret
+      - MODEL=anthropic/claude-3-5-sonnet
+    volumes:
+      - ./agents/margaret:/workspace
+      - ./agents/margaret/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+      - ./entrypoint.sh:/entrypoint.sh:ro
+      - ./shared:/shared:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    command: []
+    restart: unless-stopped
+    networks:
+      - crew-network
 
-  # margaret:
-  #   build: .
-  #   container_name: crew-margaret
-  #   mem_limit: 512m
-  #   env_file: .env
-  #   environment:
-  #     - TZ=Europe/Lisbon
-  #     - AGENT_NAME=Margaret
-  #     - OPENCLAW_CONFIG=/workspace/openclaw.json
-  #   volumes:
-  #     - ./agents/margaret:/workspace
-  #     - ./shared:/shared:ro
-  #   command: ["openclaw", "gateway", "start"]
-  #   restart: unless-stopped
-  #   networks:
-  #     - crew-network
+  drucker:
+    build: .
+    container_name: crew-drucker
+    env_file: .env
+    environment:
+      - TZ=Europe/Lisbon
+      - AGENT_NAME=Drucker
+      - MODEL=anthropic/claude-3-5-sonnet
+    volumes:
+      - ./agents/drucker:/workspace
+      - ./agents/drucker/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+      - ./entrypoint.sh:/entrypoint.sh:ro
+      - ./shared:/shared:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    command: []
+    restart: unless-stopped
+    networks:
+      - crew-network
+
+  schumpeter:
+    build: .
+    container_name: crew-schumpeter
+    env_file: .env
+    environment:
+      - TZ=Europe/Lisbon
+      - AGENT_NAME=Schumpeter
+      - MODEL=anthropic/claude-3-5-sonnet
+    volumes:
+      - ./agents/schumpeter:/workspace
+      - ./agents/schumpeter/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+      - ./entrypoint.sh:/entrypoint.sh:ro
+      - ./shared:/shared:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    command: []
+    restart: unless-stopped
+    networks:
+      - crew-network
+
+  marconi:
+    build: .
+    container_name: crew-marconi
+    env_file: .env
+    environment:
+      - TZ=Europe/Lisbon
+      - AGENT_NAME=Marconi
+      - MODEL=anthropic/claude-3-5-sonnet
+    volumes:
+      - ./agents/marconi:/workspace
+      - ./agents/marconi/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+      - ./entrypoint.sh:/entrypoint.sh:ro
+      - ./shared:/shared:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    command: []
+    restart: unless-stopped
+    networks:
+      - crew-network
+
+  thompson:
+    build: .
+    container_name: crew-thompson
+    env_file: .env
+    environment:
+      - TZ=Europe/Lisbon
+      - AGENT_NAME=Thompson
+      - MODEL=anthropic/claude-3-5-sonnet
+    volumes:
+      - ./agents/thompson:/workspace
+      - ./agents/thompson/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+      - ./entrypoint.sh:/entrypoint.sh:ro
+      - ./shared:/shared:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    command: []
+    restart: unless-stopped
+    networks:
+      - crew-network
 
 networks:
   crew-network:
