@@ -19,6 +19,7 @@ services:
     volumes:
       - ./agents/ada:/workspace
       - ./agents/ada/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+      - ./projects:/projects
       - ./entrypoint.sh:/entrypoint.sh:ro
       - ./shared:/shared:ro
     entrypoint: ["/bin/sh", "/entrypoint.sh"]
@@ -38,6 +39,7 @@ services:
     volumes:
       - ./agents/linus:/workspace
       - ./agents/linus/openclaw.json.tpl:/root/.openclaw/openclaw.json.tpl:ro
+      - ./projects:/projects
       - ./entrypoint.sh:/entrypoint.sh:ro
       - ./shared:/shared:ro
     entrypoint: ["/bin/sh", "/entrypoint.sh"]
